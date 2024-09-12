@@ -1,14 +1,58 @@
-// "use client";
-// import React from "react";
+// import React, { ReactElement } from "react";
 // import {
 //   profileDescription,
 //   educationExperience,
 //   skills,
 //   githubRepos,
 // } from "../../data/data";
+// import Image from "next/image";
 // import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 
-// const SkillItem = ({ skillItem, isTechStack = false, iconSize = 15 }) => {
+// // Interfaces for props
+// interface SkillItemProps {
+//   skillItem: {
+//     name: string;
+//     icon: ReactElement;
+//   } | null;
+//   isTechStack?: boolean;
+//   iconSize?: number;
+// }
+
+// interface Repo {
+//   githubLink: string;
+//   liveURL: string;
+//   name: string;
+//   description: string;
+//   techUsed: string[];
+// }
+
+// interface ProjectCardProps {
+//   repo: Repo;
+// }
+
+// interface SkillProps {
+//   icon: ReactElement;
+//   name: string;
+//   size: number;
+// }
+
+// interface SkillsListProps {
+//   x: number;
+//   y: number;
+// }
+
+// interface AboutMeProps {
+//   page: string;
+//   handleDivClick: (id: number) => void;
+//   expandedDiv: number;
+// }
+
+// // SkillItem component
+// const SkillItem: React.FC<SkillItemProps> = ({
+//   skillItem,
+//   isTechStack = false,
+//   iconSize = 15,
+// }) => {
 //   if (!skillItem || !skillItem.icon) {
 //     return null;
 //   }
@@ -27,7 +71,8 @@
 //   );
 // };
 
-// const ProjectCard = ({ repo }) => {
+// // ProjectCard component
+// const ProjectCard: React.FC<ProjectCardProps> = ({ repo }) => {
 //   const renderSkills = () =>
 //     repo.techUsed.map((tech, index) => {
 //       const techSkill = skills.find((skill) => skill.name === tech);
@@ -63,7 +108,8 @@
 //   );
 // };
 
-// const Skill = ({ icon, name, size }) => (
+// // Skill component
+// const Skill: React.FC<SkillProps> = ({ icon, name, size }) => (
 //   <div
 //     className={`w-[${
 //       size === 48 ? "6em" : "5em"
@@ -76,24 +122,28 @@
 //   </div>
 // );
 
-// const SkillsList = ({ x, y }) => (
+// // SkillsList component
+// const SkillsList: React.FC<SkillsListProps> = ({ x, y }) => (
 //   <div className="flex flex-wrap gap-2">
-//     <>
-//       {skills.slice(x, y).map((skill) => (
-//         <Skill key={skill.key} icon={skill.icon} name={skill.name} size={48} />
-//       ))}
-//     </>
+//     {skills.slice(x, y).map((skill) => (
+//       <Skill key={skill.key} icon={skill.icon} name={skill.name} size={48} />
+//     ))}
 //   </div>
 // );
 
-// const AboutMe = ({ page, handleDivClick, expandedDiv }) => {
+// // AboutMe component
+// const AboutMe: React.FC<AboutMeProps> = ({
+//   page,
+//   handleDivClick,
+//   expandedDiv,
+// }) => {
 //   const renderPageContent = () => {
 //     switch (page) {
 //       case "About Me":
 //         return (
 //           <div className="hero min-h-auto justify-start">
 //             <div className="hero-content flex-col lg:flex-row">
-//               <img
+//               <Image
 //                 src="https://i.pinimg.com/564x/05/6c/65/056c65643e34cb3927358b2c031b7c05.jpg"
 //                 className="max-w-sm rounded-lg shadow-2xl h-96 w-96"
 //                 alt="Profile"
@@ -108,60 +158,38 @@
 //       case "Education":
 //         return (
 //           <ul className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical my-8">
-//             <li>
-//               <div className="timeline-middle">
-//                 <svg
-//                   xmlns="http://www.w3.org/2000/svg"
-//                   viewBox="0 0 20 20"
-//                   fill="currentColor"
-//                   className="h-5 w-5"
-//                 >
-//                   <path
-//                     fillRule="evenodd"
-//                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-//                     clipRule="evenodd"
-//                   />
-//                 </svg>
-//               </div>
-//               <div className="timeline-start md:text-end mb-10">
-//                 <time className="font-mono text-lg italic">
-//                   {educationExperience[1].graduation}
-//                 </time>
-//                 <div className="text-xl font-bold font-3xl">
-//                   {educationExperience[1].institution}
+//             {educationExperience.map((education, index) => (
+//               <li key={index}>
+//                 <div className="timeline-middle">
+//                   <svg
+//                     xmlns="http://www.w3.org/2000/svg"
+//                     viewBox="0 0 20 20"
+//                     fill="currentColor"
+//                     className="h-5 w-5"
+//                   >
+//                     <path
+//                       fillRule="evenodd"
+//                       d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+//                       clipRule="evenodd"
+//                     />
+//                   </svg>
 //                 </div>
-//                 {educationExperience[1].degree}
-//               </div>
-//               <hr className="bg-gray-500" />
-//             </li>
-//             <li>
-//               <hr className="bg-gray-500" />
-//               <div className="timeline-middle">
-//                 <svg
-//                   xmlns="http://www.w3.org/2000/svg"
-//                   viewBox="0 0 20 20"
-//                   fill="currentColor"
-//                   className="h-5 w-5"
+//                 <div
+//                   className={`timeline-${
+//                     index % 2 === 0 ? "start" : "end"
+//                   } mb-10`}
 //                 >
-//                   <path
-//                     fillRule="evenodd"
-//                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-//                     clipRule="evenodd"
-//                   />
-//                 </svg>
-//               </div>
-//               <div className="timeline-end mb-10">
-//                 <time className="font-mono text-lg italic">
-//                   {educationExperience[0].graduation}
-//                 </time>
-//                 <div className="text-xl font-bold font-3xl">
-//                   {educationExperience[0].institution}
+//                   <time className="font-mono text-lg italic">
+//                     {education.graduation}
+//                   </time>
+//                   <div className="text-xl font-bold font-3xl">
+//                     {education.institution}
+//                   </div>
+//                   {education.degree}
 //                 </div>
-//                 {educationExperience[0].degree}
-//               </div>
-//               <hr className="bg-gray-500" />
-//             </li>
-//             <div className="mx-auto">???</div>
+//                 <hr className="bg-gray-500" />
+//               </li>
+//             ))}
 //           </ul>
 //         );
 //       case "Skills":
@@ -173,7 +201,7 @@
 //                   className="w-[5em] h-28 flex flex-col pt-2 items-center rounded-md hover:bg-white hover:bg-opacity-20"
 //                   onDoubleClick={() => handleDivClick(1)}
 //                 >
-//                   <img
+//                   <Image
 //                     src="/images/apps/folder.png"
 //                     alt="Technical"
 //                     className="w-12 h-12"
@@ -187,7 +215,7 @@
 //                   className="w-[5em] h-28 flex flex-col pt-2 items-center rounded-md hover:bg-white hover:bg-opacity-20"
 //                   onDoubleClick={() => handleDivClick(2)}
 //                 >
-//                   <img
+//                   <Image
 //                     src="/images/apps/folder.png"
 //                     alt="Soft"
 //                     className="w-12 h-12"
@@ -201,7 +229,7 @@
 //                   className="w-[5em] h-28 flex flex-col pt-2 items-center rounded-md hover:bg-white hover:bg-opacity-20"
 //                   onDoubleClick={() => handleDivClick(3)}
 //                 >
-//                   <img
+//                   <Image
 //                     src="/images/apps/folder.png"
 //                     alt="Design"
 //                     className="w-12 h-12"
@@ -222,7 +250,7 @@
 //             {expandedDiv === 2 && (
 //               <div className="flex absolute top-0 gap-1">
 //                 <div className="w-[6.5em] h-28 flex flex-col pt-2 items-center rounded-md hover:bg-white hover:bg-opacity-20">
-//                   <img
+//                   <Image
 //                     src="/images/folders/communication.png"
 //                     alt="Communication"
 //                     className="w-12 h-12"
@@ -232,7 +260,7 @@
 //                   </div>
 //                 </div>
 //                 <div className="w-[6em] h-28 flex flex-col pt-2 items-center rounded-md hover:bg-white hover:bg-opacity-20">
-//                   <img
+//                   <Image
 //                     src="/images/folders/teamwork.png"
 //                     alt="Teamwork"
 //                     className="w-12 h-12"
@@ -242,7 +270,7 @@
 //                   </div>
 //                 </div>
 //                 <div className="w-[5em] h-28 flex flex-col pt-2 items-center rounded-md hover:bg-white hover:bg-opacity-20">
-//                   <img
+//                   <Image
 //                     src="/images/folders/problem.png"
 //                     alt="Problem"
 //                     className="w-12 h-12"
@@ -252,7 +280,7 @@
 //                   </div>
 //                 </div>
 //                 <div className="w-[6em] h-28 flex flex-col justify-center items-center rounded-md hover:bg-white hover:bg-opacity-20">
-//                   <img
+//                   <Image
 //                     src="/images/folders/management.png"
 //                     alt="Project"
 //                     className="w-12 h-12"
@@ -288,7 +316,7 @@
 //           </main>
 //         );
 //       default:
-//         return "404 not found";
+//         return <div>404 not found</div>;
 //     }
 //   };
 
@@ -299,20 +327,19 @@
 
 // export default AboutMe;
 
-"use client";
-import React, { ReactElement } from "react";
+import React from "react";
+import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import Image from "next/image";
 import {
   profileDescription,
   educationExperience,
   skills,
   githubRepos,
 } from "../../data/data";
-import Image from "next/image";
-import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 
-// Types
+// Interfaces for the props and types used in the component
 interface SkillItemProps {
-  skillItem: { name: string; icon: ReactElement } | null;
+  skillItem: { name: string; icon: JSX.Element } | null;
   isTechStack?: boolean;
   iconSize?: number;
 }
@@ -328,7 +355,7 @@ interface ProjectCardProps {
 }
 
 interface SkillProps {
-  icon: ReactElement;
+  icon: JSX.Element;
   name: string;
   size: number;
 }
@@ -340,11 +367,11 @@ interface SkillsListProps {
 
 interface AboutMeProps {
   page: string;
-  handleDivClick: (divIndex: number) => void;
+  handleDivClick: (divNumber: number) => void;
   expandedDiv: number;
 }
 
-// SkillItem Component
+// SkillItem component with TypeScript props
 const SkillItem: React.FC<SkillItemProps> = ({
   skillItem,
   isTechStack = false,
@@ -368,7 +395,7 @@ const SkillItem: React.FC<SkillItemProps> = ({
   );
 };
 
-// ProjectCard Component
+// ProjectCard component with TypeScript props
 const ProjectCard: React.FC<ProjectCardProps> = ({ repo }) => {
   const renderSkills = () =>
     repo.techUsed.map((tech, index) => {
@@ -411,7 +438,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ repo }) => {
   );
 };
 
-// Skill Component
+// Skill component with TypeScript props
 const Skill: React.FC<SkillProps> = ({ icon, name, size }) => (
   <div
     className={`w-[${
@@ -425,7 +452,7 @@ const Skill: React.FC<SkillProps> = ({ icon, name, size }) => (
   </div>
 );
 
-// SkillsList Component
+// SkillsList component with TypeScript props
 const SkillsList: React.FC<SkillsListProps> = ({ x, y }) => (
   <div className="flex flex-wrap gap-2">
     {skills.slice(x, y).map((skill) => (
@@ -434,7 +461,7 @@ const SkillsList: React.FC<SkillsListProps> = ({ x, y }) => (
   </div>
 );
 
-// AboutMe Component
+// Main AboutMe component with TypeScript props
 const AboutMe: React.FC<AboutMeProps> = ({
   page,
   handleDivClick,
@@ -461,34 +488,60 @@ const AboutMe: React.FC<AboutMeProps> = ({
       case "Education":
         return (
           <ul className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical my-8">
-            {educationExperience.map((edu, index) => (
-              <li key={index}>
-                <div className="timeline-middle">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="h-5 w-5"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+            <li>
+              <div className="timeline-middle">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="h-5 w-5"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
+              <div className="timeline-start md:text-end mb-10">
+                <time className="font-mono text-lg italic">
+                  {educationExperience[1].graduation}
+                </time>
+                <div className="text-xl font-bold font-3xl">
+                  {educationExperience[1].institution}
                 </div>
-                <div className="timeline-start md:text-end mb-10">
-                  <time className="font-mono text-lg italic">
-                    {edu.graduation}
-                  </time>
-                  <div className="text-xl font-bold font-3xl">
-                    {edu.institution}
-                  </div>
-                  {edu.degree}
+                {educationExperience[1].degree}
+              </div>
+              <hr className="bg-gray-500" />
+            </li>
+            <li>
+              <hr className="bg-gray-500" />
+              <div className="timeline-middle">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="h-5 w-5"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
+              <div className="timeline-end mb-10">
+                <time className="font-mono text-lg italic">
+                  {educationExperience[0].graduation}
+                </time>
+                <div className="text-xl font-bold font-3xl">
+                  {educationExperience[0].institution}
                 </div>
-                <hr className="bg-gray-500" />
-              </li>
-            ))}
+                {educationExperience[0].degree}
+              </div>
+              <hr className="bg-gray-500" />
+            </li>
+            <div className="mx-auto">???</div>
           </ul>
         );
       case "Skills":
@@ -523,66 +576,27 @@ const AboutMe: React.FC<AboutMeProps> = ({
                     Soft Skills
                   </div>
                 </div>
-
-                <div
-                  className="w-[5em] h-28 flex flex-col pt-2 items-center rounded-md hover:bg-white hover:bg-opacity-20"
-                  onDoubleClick={() => handleDivClick(3)}
-                >
-                  <Image
-                    src="/images/apps/folder.png"
-                    alt="Design"
-                    className="w-12 h-12"
-                  />
-                  <div className="text-balance text-center text-sm select-none pt-2">
-                    Design Skills
-                  </div>
-                </div>
               </>
             )}
 
-            {expandedDiv === 1 && (
-              <div className="flex absolute top-0 gap-2">
-                <SkillsList x={0} y={17} />
-              </div>
-            )}
-
-            {expandedDiv === 2 && (
-              <div className="flex absolute top-0 gap-1">
-                {/* Soft skills content */}
-              </div>
-            )}
-
-            {expandedDiv === 3 && (
-              <div className="flex absolute top-0 gap-2">
-                <SkillsList x={17} y={20} />
-              </div>
-            )}
+            {expandedDiv === 1 && <SkillsList x={0} y={14} />}
+            {expandedDiv === 2 && <SkillsList x={14} y={19} />}
           </div>
         );
-      case "My Stuffs":
+      case "GitHub Projects":
         return (
-          <div>
-            <div className="grid sm:grid-cols-2 gap-2">
-              {githubRepos.map((repo, index) => (
-                <ProjectCard key={index} repo={repo} />
-              ))}
-            </div>
+          <div className="flex flex-col gap-4">
+            {githubRepos.map((repo, index) => (
+              <ProjectCard repo={repo} key={index} />
+            ))}
           </div>
-        );
-      case "Resume":
-        return (
-          <main className="border-0 flex w-full justify-center opacity-75 mt-2 text-sm">
-            too bored to make a resume.
-          </main>
         );
       default:
-        return <div>404 not found</div>;
+        return null;
     }
   };
 
-  return (
-    <main className="h-[100vh] w-full ml-2.5 mt-2">{renderPageContent()}</main>
-  );
+  return <div>{renderPageContent()}</div>;
 };
 
 export default AboutMe;

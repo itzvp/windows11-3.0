@@ -1,16 +1,26 @@
-"use client";
 import React, { useEffect, useRef, useState } from "react";
 import Draggable from "react-draggable";
 import AboutMe from "./AboutMe";
 import Image from "next/image";
+interface ExplorerProps {
+  isExplorerOpen: boolean;
+  toggleExplorer: () => void;
+  aboutMe: boolean;
+  bounds?: { top: number; left: number; right: number; bottom: number };
+}
 
-const Explorer = ({ isExplorerOpen, toggleExplorer, aboutMe, bounds }) => {
+const Explorer: React.FC<ExplorerProps> = ({
+  isExplorerOpen,
+  toggleExplorer,
+  aboutMe,
+  bounds,
+}) => {
   const [page, setPage] = useState("About Me");
-  const [icon, setIcon] = useState(null);
+  const [icon, setIcon] = useState("home");
   const explorerRef = useRef(null);
   const [expandedDiv, setExpandedDiv] = useState(0);
 
-  const handleDivClick = (divNumber) => {
+  const handleDivClick = (divNumber: number) => {
     setExpandedDiv(divNumber === expandedDiv ? 0 : divNumber);
   };
 
@@ -73,7 +83,7 @@ const Explorer = ({ isExplorerOpen, toggleExplorer, aboutMe, bounds }) => {
               <div className="flex justify-around w-48 py-2">
                 <button
                   className={`material-symbols-outlined font-extralight text-xl hover:bg-neutral-600 rounded-md hover:bg-opacity-50 ${
-                    handleDivClick === !0 ? "opacity-45" : "font-bold"
+                    expandedDiv === 0 ? "opacity-45" : "font-bold"
                   }`}
                   onClick={() => handleDivClick(0)}
                 >
